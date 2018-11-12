@@ -4,7 +4,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -17,6 +19,7 @@ import br.com.senac.dominio.Cidade;
 import br.com.senac.dominio.Curso;
 import br.com.senac.dominio.Endereco;
 import br.com.senac.dominio.Estado;
+import br.com.senac.dominio.ItemPedido;
 import br.com.senac.dominio.Pagamento;
 import br.com.senac.dominio.PagamentoComBoleto;
 import br.com.senac.dominio.Pedido;
@@ -27,6 +30,7 @@ import br.com.senac.repositorio.CidadeRepositorio;
 import br.com.senac.repositorio.CursoRepositorio;
 import br.com.senac.repositorio.EnderecoRepositorio;
 import br.com.senac.repositorio.EstadoRepositorio;
+import br.com.senac.repositorio.ItemPedidoRepositorio;
 import br.com.senac.repositorio.PagamentoRepositorio;
 import br.com.senac.repositorio.PedidoRepositorio;
 
@@ -56,6 +60,9 @@ public class Init implements ApplicationListener<ContextRefreshedEvent>{
 	
 	@Autowired
 	CategoriaRepositorio categoriaRepositorio;
+	
+	@Autowired
+	ItemPedidoRepositorio itemPedidoRepositorio;
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -145,7 +152,6 @@ public class Init implements ApplicationListener<ContextRefreshedEvent>{
 		}
 		
 		
-		
 		Categoria categoria1 = new Categoria();
 		Categoria categoria2 = new Categoria();
 		
@@ -173,6 +179,22 @@ public class Init implements ApplicationListener<ContextRefreshedEvent>{
 	
 		categoriaRepositorio.saveAll(Arrays.asList(categoria1, categoria2));
 		cursoRepositorio.saveAll(Arrays.asList(curso1, curso2));
+		
+		//Criando Itens
+		ItemPedido item1 = new ItemPedido(ped1, curso1, 0.00, 1, 200.00);
+		ItemPedido item2 = new ItemPedido(ped1, curso2, 10.00, 1, 390.00);
+		
+		//Criando lista de itens para um pedido
+		Set<ItemPedido> listaItens1 = new HashSet();
+		listaItens1.add(item1);
+		listaItens1.add(item2);
+		ped1.setItens(listaItens1);
+		
+		//Indicando qual lista de Itens o curso está
+		curso1.setItens(listaItens1);
+		curso2.setItens(listaItens1);
+		
+		itemPedidoRepositorio.saveAll(Arrays.asList(item1, item2));
 		
 		
 		

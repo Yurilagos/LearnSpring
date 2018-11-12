@@ -30,6 +30,7 @@ public class CursoService {
 		return repoCurso.save(curso);
 	}
 	
+	
 	public Curso alterar(Curso objCurso) throws ObjectNotFoundException {
 		Curso objCursoEncontrado = buscar(objCurso.getId());
 		objCursoEncontrado.setNome(objCurso.getNome());

@@ -19,6 +19,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Aluno implements Serializable {
 	
+	
+	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1442241959338563807L;
+	
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
@@ -28,13 +37,22 @@ public class Aluno implements Serializable {
 	@JsonIgnore
 	private String senha;
 	
+	
 	@OneToMany(mappedBy="aluno")
 	private List<Endereco> enderecos = new ArrayList<>();
+	
 	
 	@ElementCollection
 	@CollectionTable(name="TELEFONE")
 	private Set<String> telefones = new HashSet<>();
 	
+	@JsonIgnore // O aluno não precisa saber que é o Pedido para JSON. Isso vai acontecer na classe pedido
+	@OneToMany(mappedBy="aluno")
+	private List<Pedido> pedidos = new ArrayList<>();
+	
+	public Aluno() {
+		super();
+	}
 	
 	
 	public List<Endereco> getEnderecos() {
@@ -55,9 +73,6 @@ public class Aluno implements Serializable {
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
-	@OneToMany(mappedBy="aluno")
-	private List<Pedido> pedidos = new ArrayList<>();
-
 	
 	
 	public String getEmail() {

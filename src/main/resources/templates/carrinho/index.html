@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width" />
+	<title>Cursos</title>
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+	crossorigin="anonymous">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" 
+	crossorigin="anonymous">
+
+
+</head>
+<body>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<strong>Categorias</strong>
+	</div>
+		
+	<div th:if="${not #lists.isEmpty(session.cart)}">
+		
+	<div class="panel-body">
+		<div class="table-responsive">
+			<table class="table table-sm table-striped table-hover table-bordered">
+				<thead>
+				
+		
+					<tr>
+						<th>Funcao</th>
+						<th>ID</th>
+						<th>Curso</th>
+						<th>Descrição</th>
+						<th>Preço</th>
+						<th>Quantidade</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>		
+					<tr th:each="item : ${session.cart}">
+					<td>
+					<a th:href="@{/carrinho/remover/{id}(id=${item.curso.id})}">Remover</a></td>
+						<td th:text="${item.curso.id}"></td>
+						<td th:text="${item.curso.nome}"></td>
+						<td th:text="${item.curso.descricao}"></td>
+						<td th:text="${'R$: ' + item.curso.preco}"></td>
+						<td th:text="${item.quantidade}"></td>
+						<td th:text="${item.quantidade * item.curso.preco}"></td>
+						</tr>
+					</tbody>					
+				</table>
+			</div>
+		</div>
+	
+		</div>
+		<div th:unless="${not #lists.isEmpty(session.cart)}">Lista está vazia</div>
+		<div class="card-footer">
+		<a class="btn btn-sm btn-success" th:href="@{/index/}">Continuar Comprado</a>
+		</div>
+</div>
+	
+	
+			
+<!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

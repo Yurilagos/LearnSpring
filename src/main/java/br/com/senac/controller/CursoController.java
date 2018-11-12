@@ -23,14 +23,22 @@ public class CursoController {
 
 	@GetMapping("/listarCurso")
 	public ModelAndView listaCursos() {
-		ModelAndView mv = new ModelAndView("/paginaCursos");
+		ModelAndView mv = new ModelAndView("curso/paginaCursos");
 		mv.addObject("cursos", cursoService.listaCursos());
+		return mv;
+	}
+	
+	
+	@GetMapping("/index")
+	public ModelAndView index() {
+		ModelAndView mv = new ModelAndView("curso/index");
+		mv.addObject("cursos", cursoService.listaCursos() );
 		return mv;
 	}
 
 	@GetMapping("/adicionar")
 	public ModelAndView add() {
-		ModelAndView mv = new ModelAndView("/paginaAdicionarCurso");
+		ModelAndView mv = new ModelAndView("curso/paginaAdicionarCurso");
 		mv.addObject("curso", new Curso());
 		mv.addObject("categorias", categoriaService.listaCategorias());
 		return mv;
@@ -50,7 +58,7 @@ public class CursoController {
 	
 	@GetMapping("/alterarCurso/{id}")
 	public ModelAndView alterar(@PathVariable("id") Integer id) throws ObjectNotFoundException {
-		ModelAndView mv = new ModelAndView("/paginaAlterar");
+		ModelAndView mv = new ModelAndView("curso/paginaAlterar");
 		mv.addObject("curso", cursoService.buscar(id));
 		mv.addObject("categorias", categoriaService.listaCategorias());
 		return mv;
